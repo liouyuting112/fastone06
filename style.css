@@ -294,8 +294,37 @@ textarea.fm-input { min-height: 140px; resize: vertical; }
 .m-rtp, .m-vol { font-size: 1.8rem; font-weight: 900; }
 .m-lbl { font-size: 0.7rem; color: var(--gray); text-transform: uppercase; letter-spacing: 0.1em; }
 
-/* ── Subpage Responsive Fixes ─────────────────────── */
+/* ── Page Hero Aliases (used in games.html, contact.html) ─── */
+.page-hero { padding: 160px 0 80px; background: var(--dark); border-bottom: 1px solid var(--line); position: relative; overflow: hidden; }
+.page-hero::after { content:''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 100% 0%, rgba(255,40,0,0.05) 0%, transparent 50%); pointer-events: none; }
+.page-hero__title { font-size: clamp(3rem, 7vw, 6.5rem); font-weight: 900; line-height: 0.9; letter-spacing: -0.04em; text-transform: uppercase; margin: 8px 0 20px; }
+.page-hero__sub { font-size: 1.1rem; color: var(--gray); max-width: 560px; line-height: 1.75; }
+
+/* ══════════════════════════════════════════════════════
+   ALL RESPONSIVE RULES (Homepage + Subpages)
+   ══════════════════════════════════════════════════════ */
+
+@media(max-width: 1200px) {
+  .hero-grid { gap: 40px; }
+  .h-title { font-size: 6rem; }
+  .h-art { height: 500px; }
+  .f-grid { grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 40px; }
+}
+
 @media(max-width: 1024px) {
+  /* Homepage */
+  .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 50px; }
+  .h-desc { margin: 0 auto 40px; }
+  .h-actions { justify-content: center; }
+  .h-art { height: 480px; transform: none; margin-top: 30px; filter: none; }
+  .ha-text { transform: none; bottom: 30px; left: 30px; font-size: 1.5rem; }
+  .ha-card:hover .ha-text { transform: translateY(-8px); }
+  .stat-grid { grid-template-columns: repeat(2, 1fr); gap: 40px; }
+  .grid-matrix { grid-template-columns: repeat(2, 1fr); }
+  .a-item { grid-template-columns: 100px 1fr; gap: 30px; }
+  .a-item .a-desc { grid-column: 1 / -1; }
+  .f-grid { grid-template-columns: 1fr 1fr; }
+  /* Subpages */
   .tech-item { grid-template-columns: 1fr; min-height: auto; }
   .tech-info { padding: 60px 40px; border-right: none !important; border-left: none !important; }
   .t-vis { height: 250px; }
@@ -307,17 +336,51 @@ textarea.fm-input { min-height: 140px; resize: vertical; }
 }
 
 @media(max-width: 768px) {
-  .pg-title { font-size: 3.5rem; }
+  /* Homepage */
+  header { height: 75px; }
+  .container { padding: 0 24px; }
+  .logo { font-size: 1.6rem; }
+  .nav-links, .lang { display: none; }
+  .menu-toggle { display: flex; }
+  .hero { padding: 140px 0 80px; }
+  .h-title { font-size: 4rem; }
+  .h-desc { font-size: 1.15rem; }
+  .stat-item { padding-left: 20px; }
+  .st-num { font-size: 3rem; }
+  .sec-head { flex-direction: column; align-items: flex-start; gap: 24px; }
+  .sec-head .btn-out { width: 100%; }
+  .a-item { padding: 40px 0; }
+  .a-num { font-size: 3rem; }
+  .a-title { font-size: 1.8rem; }
+  .d-grid { grid-template-columns: 1fr; }
+  .d-card { padding: 50px 30px; }
+  .f-bot { flex-direction: column; gap: 15px; align-items: center; text-align: center; }
+  /* Subpages */
+  .pg-head { padding: 120px 0 50px; }
+  .pg-title, .page-hero__title { font-size: 3.5rem; }
+  .page-hero { padding: 120px 0 50px; }
   .t-title { font-size: 2rem; }
   .t-num { font-size: 4rem; }
   .g-grid { grid-template-columns: repeat(2, 1fr); }
   .btn-submit { transform: none; }
   .btn-submit span { transform: none; }
+  .form-box { padding: 35px 25px; }
 }
 
-@media(max-width: 480px) {
+@media(max-width: 580px) {
+  /* Homepage */
+  .stat-grid { grid-template-columns: 1fr; }
+  .h-art { grid-template-columns: 1fr; height: auto; gap: 16px; }
+  .ha-card { aspect-ratio: 16/10; }
+  .grid-matrix { grid-template-columns: 1fr; }
+  .h-title { font-size: 3.2rem; }
+  .h-desc { font-size: 1.1rem; }
+  .f-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; }
+  .f-desc { margin: 0 auto; }
+  /* Subpages */
   .g-grid { grid-template-columns: 1fr; }
-  .pg-title { font-size: 2.8rem; }
+  .pg-title, .page-hero__title { font-size: 2.8rem; }
   .tech-info { padding: 40px 20px; }
   .form-box { padding: 30px 20px; }
 }
+
