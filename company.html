@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Architecture | Fastone Ultra</title>
+<title>Fastone | Tech Architecture</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
+<header id="header">
   <div class="container nav-wrap">
     <a href="index.html" class="logo"><span class="red-txt skew">FAST</span>ONE</a>
     <div class="nav-links">
@@ -17,52 +17,49 @@
       <a href="company.html" class="active">Tech</a>
       <a href="contact.html">Deploy</a>
     </div>
-    <div class="lang"><span class="active">EN</span> / <span>CN</span></div>
+    <div class="lang">
+      <span>EN</span> / <span>CN</span>
+    </div>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 </header>
 
-<section class="pg-head">
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="games.html">Games</a>
+  <a href="company.html" class="active">Tech</a>
+  <a href="contact.html">Deploy</a>
+</div>
+
+<section class="page-hero">
   <div class="container">
-    <h1 class="pg-title"><span class="skew">PURE</span> <span class="red-txt skew">MATHEMATICS</span></h1>
-    <p class="pg-desc">We don't just build visually stunning games. We engineer proprietary backend mathematics designed to maximise RTP efficiency and player retention.</p>
+    <div class="tag skew">System Architecture</div>
+    <h1 class="page-hero__title"><span class="skew">THE</span> <span class="red-txt skew">ENGINE</span></h1>
+    <p class="page-hero__sub">Pure mathematical precision. We've built a unified gaming core that handles millions of requests per second with zero latency spikes.</p>
   </div>
 </section>
 
-<section>
+<section class="tech-grid">
   <div class="container">
-    <div class="tech-grid">
-      <div>
-        <div class="t-num skew">01</div>
-        <h2 class="t-title skew">True RNG Core</h2>
-        <p class="t-desc">Our slot volatility models are powered by a multi-layered Random Number Generator, rigorously verified and certified across 35 independent jurisdictions globally.</p>
+    <div class="a-list">
+      <div class="a-item">
+        <div class="a-num skew">01</div>
+        <div class="a-title skew">Infinite Scaling</div>
+        <div class="a-desc">Our cluster architecture scales horizontally on-demand. Whether you have 100 or 100,000 concurrent players, the spin latency remains under 30ms.</div>
       </div>
-      <div class="t-vis">
-        <div class="t-vis-bg">ALGORITHM</div>
-        <div class="t-vis-line"></div>
+      <div class="a-item">
+        <div class="a-num skew">02</div>
+        <div class="a-title skew">Secured Uplink</div>
+        <div class="a-desc">Military-grade encryption for every API call. We utilize hardware-based RNG seeds ensuring 100% fair play and complete regulatory transparency.</div>
       </div>
-    </div>
-
-    <div class="tech-grid flip">
-      <div>
-        <div class="t-num skew">02</div>
-        <h2 class="t-title skew">Predictive ML</h2>
-        <p class="t-desc">Our back-office leverages machine learning to predict player churn probability within 7 days. Configure auto-retention rules to dish out targeted free spins instantly.</p>
-      </div>
-      <div class="t-vis">
-        <div class="t-vis-bg">MACHINE LEARNING</div>
-        <div class="t-vis-line" style="transform: rotate(90deg);"></div>
-      </div>
-    </div>
-
-    <div class="tech-grid">
-      <div>
-        <div class="t-num skew">03</div>
-        <h2 class="t-title skew">Unified Jackpot</h2>
-        <p class="t-desc">A single, seamless linked jackpot structure that operates across all our verticals—Slots, Fishing, and Tables—pooling liquidity mathematically for faster growth.</p>
-      </div>
-      <div class="t-vis">
-        <div class="t-vis-bg">NETWORK POOL</div>
-        <div class="t-vis-line" style="transform: rotate(45deg);"></div>
+      <div class="a-item">
+        <div class="a-num skew">03</div>
+        <div class="a-title skew">Real-time Analytics</div>
+        <div class="a-desc">Monitor every spin, every win, and every player session in real-time. Our dashboard provides actionable insights to maximize your GGR instantly.</div>
       </div>
     </div>
   </div>
@@ -100,5 +97,36 @@
     </div>
   </div>
 </footer>
+
+<script>
+// MOBILE MENU LOGIC
+const toggle = document.getElementById('menu-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+const header = document.getElementById('header');
+
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+});
+
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    toggle.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+});
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.style.background = 'rgba(3,3,3,0.95)';
+    header.style.height = '70px';
+  } else {
+    header.style.background = 'rgba(3,3,3,0.8)';
+    header.style.height = '80px';
+  }
+});
+</script>
 </body>
 </html>

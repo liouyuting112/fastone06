@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Games Arsenal | Fastone Ultra</title>
+<title>Fastone | The Arsenal</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
+<header id="header">
   <div class="container nav-wrap">
     <a href="index.html" class="logo"><span class="red-txt skew">FAST</span>ONE</a>
     <div class="nav-links">
@@ -17,29 +17,43 @@
       <a href="company.html">Tech</a>
       <a href="contact.html">Deploy</a>
     </div>
-    <div class="lang"><span class="active">EN</span> / <span>CN</span></div>
+    <div class="lang">
+      <span>EN</span> / <span>CN</span>
+    </div>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 </header>
 
-<section class="pg-head">
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="games.html" class="active">Games</a>
+  <a href="company.html">Tech</a>
+  <a href="contact.html">Deploy</a>
+</div>
+
+<section class="page-hero">
   <div class="container">
-    <h1 class="pg-title"><span class="skew">THE</span> <span class="red-txt skew">ARSENAL</span></h1>
-    <p class="pg-desc">Explore our full matrix of 100+ highly volatile, RNG-certified casino games engineered for ultimate player retention.</p>
+    <div class="tag skew">High-Performance RNG</div>
+    <h1 class="page-hero__title"><span class="skew">THE</span> <span class="red-txt skew">ARSENAL</span></h1>
+    <p class="page-hero__sub">Browse our complete matrix of ultra-high retention titles. From classic mechanical slots to advanced multiplayer fishing engines.</p>
   </div>
 </section>
 
-<section>
-  <div class="container filters" id="filters">
-    <button class="f-btn active" data-filter="all"><span>All Games</span></button>
-    <button class="f-btn" data-filter="slot"><span>Video Slots</span></button>
-    <button class="f-btn" data-filter="fishing"><span>Arcade Fishing</span></button>
-    <button class="f-btn" data-filter="table"><span>RNG Table</span></button>
-    <button class="f-btn" data-filter="bingo"><span>Bingo</span></button>
+<section class="container">
+  <div class="filters" id="filters">
+    <button class="f-btn active" data-cat="all">All Assets</button>
+    <button class="f-btn" data-cat="slots">Video Slots</button>
+    <button class="f-btn" data-cat="fishing">Fishing</button>
+    <button class="f-btn" data-cat="table">Table & RNG</button>
+    <button class="f-btn" data-cat="arcade">Arcade</button>
   </div>
-  <div class="container">
-    <div class="g-grid" id="g-grid">
-      <!-- Injected via JS -->
-    </div>
+  
+  <div class="g-grid" id="g-grid">
+    <!-- Injected via JS -->
   </div>
 </section>
 
@@ -78,49 +92,69 @@
 
 <script src="app.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  const grid = document.getElementById('g-grid');
-  const filters = document.getElementById('filters');
-  
-  if(typeof GAMES === 'undefined' || typeof getGameImg === 'undefined') {
-    grid.innerHTML = '<div style="color:var(--red);font-weight:900;">SYSTEM ERROR: app.js missing.</div>';
-    return;
-  }
+// MOBILE MENU LOGIC
+const toggle = document.getElementById('menu-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+const header = document.getElementById('header');
 
-  function renderGrid(filter) {
-    let html = '';
-    const items = filter === 'all' ? GAMES : GAMES.filter(g => g.category.toLowerCase() === filter);
-    
-    items.forEach(g => {
-      const src = getGameImg(g.name);
-      html += `
-        <div class="g-card">
-          <img src="${src}" alt="${g.name}">
-          <div class="g-card-info">
-            <div class="gc-cat">${g.category}</div>
-            <div class="gc-name">${g.name}</div>
-            <div class="gc-stats">
-              <div class="gc-st">RTP <strong>${g.rtp}</strong></div>
-              <div class="gc-st">Vol <strong>${g.volatility}</strong></div>
-              <div class="gc-st">Max <strong><span class="red-txt">${g.maxWin}</span></strong></div>
-            </div>
-            <button class="gc-play" onclick="alert('Demo: ${g.name.replace(/'/g,"\\'")}!')"><span>Play Demo</span></button>
-          </div>
-        </div>
-      `;
-    });
-    grid.innerHTML = html;
-  }
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+});
 
-  renderGrid('all');
-
-  filters.addEventListener('click', e => {
-    const btn = e.target.closest('.f-btn');
-    if(!btn) return;
-    filters.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    renderGrid(btn.dataset.filter);
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    toggle.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
   });
+});
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.style.background = 'rgba(3,3,3,0.95)';
+    header.style.height = '70px';
+  } else {
+    header.style.background = 'rgba(3,3,3,0.8)';
+    header.style.height = '80px';
+  }
+});
+
+// Game Grid Logic
+document.addEventListener('DOMContentLoaded', () => {
+  if (typeof GAMES === 'undefined' || typeof getGameImg === 'undefined') return;
+
+  const grid = document.getElementById('g-grid');
+  const btns = document.querySelectorAll('.f-btn');
+
+  function render(cat) {
+    const filtered = cat === 'all' ? GAMES : GAMES.filter(g => g.category.toLowerCase().includes(cat));
+    grid.innerHTML = filtered.map(g => `
+      <div class="g-card" onclick="alert('Demo: ${g.name.replace(/'/g,"\\'")}!')">
+        <img src="${getGameImg(g.name)}" alt="${g.name}">
+        <div class="g-card-info">
+          <div class="gc-cat">${g.category}</div>
+          <div class="gc-name">${g.name}</div>
+          <div class="gc-stats">
+            <div class="gc-st">RTP: <strong>96.5%</strong></div>
+            <div class="gc-st">Vol: <strong>High</strong></div>
+          </div>
+          <button class="gc-play">PLAY DEMO</button>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  btns.forEach(b => {
+    b.addEventListener('click', () => {
+      btns.forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      render(b.dataset.cat);
+    });
+  });
+
+  render('all');
 });
 </script>
 </body>

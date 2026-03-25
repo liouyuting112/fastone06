@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<header>
+<header id="header">
   <div class="container nav-wrap">
     <a href="index.html" class="logo"><span class="red-txt skew">FAST</span>ONE</a>
     <div class="nav-links">
@@ -20,8 +20,20 @@
     <div class="lang">
       <span class="active">EN</span> / <span>CN</span>
     </div>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 </header>
+
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html" class="active">Home</a>
+  <a href="games.html">Games</a>
+  <a href="company.html">Tech</a>
+  <a href="contact.html">Deploy</a>
+</div>
 
 <section class="hero">
   <div class="container hero-grid">
@@ -34,7 +46,7 @@
       </div>
     </div>
     <div class="h-art" id="h-art">
-      <!-- Injected via JS to guarantee 100% image accuracy -->
+      <!-- Injected via JS -->
     </div>
   </div>
 </section>
@@ -57,7 +69,7 @@
       <a href="games.html" class="btn-out" style="padding: 10px 20px; font-size: 0.75rem;"><span>View Full Matrix</span></a>
     </div>
     <div class="grid-matrix" id="game-matrix">
-      <!-- Injected strictly via JS -->
+      <!-- Injected via JS -->
     </div>
   </div>
 </section>
@@ -143,54 +155,68 @@
 
 <script src="app.js"></script>
 <script>
+// MOBILE MENU LOGIC
+const toggle = document.getElementById('menu-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+const header = document.getElementById('header');
+
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+});
+
+// Close menu on link click
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    toggle.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+});
+
+// Scroll background change
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.style.background = 'rgba(3,3,3,0.95)';
+    header.style.height = '70px';
+  } else {
+    header.style.background = 'rgba(3,3,3,0.8)';
+    header.style.height = '80px';
+  }
+});
+
 // STRICT IMAGE ENFORCEMENT logic
 document.addEventListener('DOMContentLoaded', () => {
-  if (typeof GAMES === 'undefined' || typeof getGameImg === 'undefined') {
-    console.error("Critical: app.js failed to load. Images cannot be rendered.");
-    return;
+  if (typeof GAMES === 'undefined' || typeof getGameImg === 'undefined') return;
+
+  const heroArt = document.getElementById('h-art');
+  const picks = [GAMES[0], GAMES[35]];
+  
+  if (heroArt) {
+    heroArt.innerHTML = picks.map((g, i) => `
+      <div class="ha-card" style="${i === 1 ? 'transform: translateY(40px);' : ''}">
+        <img src="${getGameImg(g.name)}" alt="${g.name}">
+        <div class="ha-text"><span>${i === 0 ? 'FLAGSHIP' : 'MULTIPLAYER'}</span>${g.name}</div>
+      </div>
+    `).join('');
   }
 
-  // 1. Populate Hero Art (Guaranteed 2 images at all times)
-  const heroArt = document.getElementById('h-art');
-  const hGame1 = GAMES.find(g => g.name === 'Roma X 10000') || GAMES[0];
-  const hGame2 = GAMES.find(g => g.name === 'Mega Fishing') || GAMES.find(g => g.category.toLowerCase() === 'fishing') || GAMES[35];
-  
-  // getGameImg strictly returns an image path now.
-  const img1 = getGameImg(hGame1.name);
-  const img2 = getGameImg(hGame2.name);
-
-  heroArt.innerHTML = `
-    <div class="ha-card">
-      <img src="${img1}" alt="${hGame1.name}">
-      <div class="ha-text"><span>FLAGSHIP</span>${hGame1.name}</div>
-    </div>
-    <div class="ha-card" style="transform: translateY(40px);">
-      <img src="${img2}" alt="${hGame2.name}">
-      <div class="ha-text"><span>MULTIPLAYER</span>${hGame2.name}</div>
-    </div>
-  `;
-
-  // 2. Populate Matrix (Strictly 8 images)
   const matrix = document.getElementById('game-matrix');
-  const picks = [
-    GAMES[0], GAMES[1], GAMES[2], GAMES[3],
-    GAMES[35], GAMES[36], GAMES[40], GAMES[49]
-  ];
+  const matrixPicks = [GAMES[0], GAMES[1], GAMES[2], GAMES[3], GAMES[35], GAMES[36], GAMES[40], GAMES[49]];
 
-  matrix.innerHTML = picks.map(g => {
-    if(!g) return '';
-    const src = getGameImg(g.name);
-    return `
+  if (matrix) {
+    matrix.innerHTML = matrixPicks.map(g => !g ? '' : `
       <div class="m-card" onclick="alert('Demo: ${g.name.replace(/'/g,"\\'")}!')">
-        <img src="${src}" alt="${g.name}">
+        <img src="${getGameImg(g.name)}" alt="${g.name}">
         <div class="m-card-info">
           <div class="mc-cat">${g.category}</div>
           <div class="mc-name">${g.name}</div>
           <div class="mc-play">PLAY DEMO</div>
         </div>
       </div>
-    `;
-  }).join('');
+    `).join('');
+  }
 });
 </script>
 </body>

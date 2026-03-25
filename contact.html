@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Global Deployment | Fastone Ultra</title>
+<title>Fastone | Deploy Now</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<header>
+<header id="header">
   <div class="container nav-wrap">
     <a href="index.html" class="logo"><span class="red-txt skew">FAST</span>ONE</a>
     <div class="nav-links">
@@ -17,62 +17,79 @@
       <a href="company.html">Tech</a>
       <a href="contact.html" class="active">Deploy</a>
     </div>
-    <div class="lang"><span class="active">EN</span> / <span>CN</span></div>
+    <div class="lang">
+      <span>EN</span> / <span>CN</span>
+    </div>
+    <div class="menu-toggle" id="menu-toggle">
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
   </div>
 </header>
 
-<section class="pg-head">
+<div class="mobile-nav" id="mobile-nav">
+  <a href="index.html">Home</a>
+  <a href="games.html">Games</a>
+  <a href="company.html">Tech</a>
+  <a href="contact.html" class="active">Deploy</a>
+</div>
+
+<section class="page-hero">
   <div class="container">
-    <h1 class="pg-title"><span class="skew">INITIATE</span> <span class="red-txt skew">API DEPLOYMENT</span></h1>
-    <p class="pg-desc">Connect directly with our integration engineers. Achieve full catalog deployment via our single REST endpoint within 72 hours.</p>
+    <div class="tag skew">Rapid Integration</div>
+    <h1 class="page-hero__title"><span class="skew">DEPLOY</span> <span class="red-txt skew">NOW</span></h1>
+    <p class="page-hero__sub">Submit your technical requirements and our engineering team will have your API environment ready in under 72 hours.</p>
   </div>
 </section>
 
-<section class="container deploy-grid">
-  <div class="form-box">
-    <h2 class="fm-title skew">Integration Request</h2>
-    <form onsubmit="event.preventDefault(); alert('Deployment request initiated. Protocol 72H active.');">
-      <div class="fm-grp">
-        <label class="fm-lbl">Operator Name / Company</label>
-        <input type="text" class="fm-input" required placeholder="Enter company name">
+<section class="container">
+  <div class="deploy-grid">
+    <div class="info-box">
+      <h3 class="skew">Connect to the Grid</h3>
+      <p class="info-desc">Our onboarding specialist will guide you through the seamless integration process. All documentation is available upon request.</p>
+      
+      <div class="i-list">
+        <div class="i-item">
+          <div class="i-lbl">Technical Support</div>
+          <div class="i-val">support@fastone.network</div>
+        </div>
+        <div class="i-item">
+          <div class="i-lbl">Partnership Inquiries</div>
+          <div class="i-val">partners@fastone.network</div>
+        </div>
+        <div class="i-item">
+          <div class="i-lbl">Global HQ</div>
+          <div class="i-val">226 High-Performance Way, iGaming City</div>
+        </div>
       </div>
-      <div class="fm-grp">
-        <label class="fm-lbl">Business Email</label>
-        <input type="email" class="fm-input" required placeholder="name@company.com">
-      </div>
-      <div class="fm-grp">
-        <label class="fm-lbl">Target Markets</label>
-        <input type="text" class="fm-input" placeholder="e.g., LatAm, Southeast Asia">
-      </div>
-      <div class="fm-grp">
-        <label class="fm-lbl">Deployment Specifications</label>
-        <textarea class="fm-input" placeholder="Platform size, currency requirements..."></textarea>
-      </div>
-      <button type="submit" class="btn-submit"><span>Transmit Protocol</span></button>
-    </form>
-  </div>
+    </div>
 
-  <div class="info-box">
-    <h3 class="skew">Global Support Operations</h3>
-    <p class="info-desc">We operate dedicated B2B engineering hubs globally. Your integration is assigned to a specific technical squad ensuring 99.9% uptime and zero latency communication.</p>
-    
-    <div class="i-list">
-      <div class="i-item">
-        <div class="i-lbl">Email</div>
-        <div class="i-val">api-integration@fastone.com</div>
-      </div>
-      <div class="i-item">
-        <div class="i-lbl">Telegram</div>
-        <div class="i-val">@Fastone_Deployments</div>
-      </div>
-      <div class="i-item">
-        <div class="i-lbl">Skype</div>
-        <div class="i-val">live:.cid.fastonetech</div>
-      </div>
-      <div class="i-item">
-        <div class="i-lbl">HQ Office</div>
-        <div class="i-val">Tower 42, Cyberport, Hong Kong</div>
-      </div>
+    <div class="form-box">
+      <h3 class="fm-title skew">Initialize Setup</h3>
+      <form id="contact-form" onsubmit="event.preventDefault(); alert('Request Received! Our engineering team will contact you within 15 minutes.');">
+        <div class="fm-grp">
+          <label class="fm-lbl">Operator Name</label>
+          <input type="text" class="fm-input" placeholder="e.g. Global Tech Ops" required>
+        </div>
+        <div class="fm-grp">
+          <label class="fm-lbl">Contact Email</label>
+          <input type="email" class="fm-input" placeholder="admin@operator.io" required>
+        </div>
+        <div class="fm-grp">
+          <label class="fm-lbl">Deployment Type</label>
+          <select class="fm-input">
+            <option>API Only</option>
+            <option>White Label Solution</option>
+            <option>Turnkey Platform</option>
+          </select>
+        </div>
+        <div class="fm-grp">
+          <label class="fm-lbl">Technical Requirements</label>
+          <textarea class="fm-input" placeholder="Describe your existing wallet/platform architecture..."></textarea>
+        </div>
+        <button type="submit" class="btn-submit"><span class="skew">Request Uplink</span></button>
+      </form>
     </div>
   </div>
 </section>
@@ -109,5 +126,36 @@
     </div>
   </div>
 </footer>
+
+<script>
+// MOBILE MENU LOGIC
+const toggle = document.getElementById('menu-toggle');
+const mobileNav = document.getElementById('mobile-nav');
+const header = document.getElementById('header');
+
+toggle.addEventListener('click', () => {
+  toggle.classList.toggle('active');
+  mobileNav.classList.toggle('active');
+  document.body.style.overflow = mobileNav.classList.contains('active') ? 'hidden' : '';
+});
+
+mobileNav.querySelectorAll('a').forEach(link => {
+  link.addEventListener('click', () => {
+    toggle.classList.remove('active');
+    mobileNav.classList.remove('active');
+    document.body.style.overflow = '';
+  });
+});
+
+window.addEventListener('scroll', () => {
+  if (window.scrollY > 50) {
+    header.style.background = 'rgba(3,3,3,0.95)';
+    header.style.height = '70px';
+  } else {
+    header.style.background = 'rgba(3,3,3,0.8)';
+    header.style.height = '80px';
+  }
+});
+</script>
 </body>
 </html>
