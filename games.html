@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games Arsenal | Fastone Ultra</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <div class="container nav-wrap">
+    <a href="index.html" class="logo"><span class="red-txt skew">FAST</span>ONE</a>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="games.html" class="active">Games</a>
+      <a href="company.html">Tech</a>
+      <a href="contact.html">Deploy</a>
+    </div>
+    <div class="lang"><span class="active">EN</span> / <span>CN</span></div>
+  </div>
+</header>
+
+<section class="pg-head">
+  <div class="container">
+    <h1 class="pg-title"><span class="skew">THE</span> <span class="red-txt skew">ARSENAL</span></h1>
+    <p class="pg-desc">Explore our full matrix of 100+ highly volatile, RNG-certified casino games engineered for ultimate player retention.</p>
+  </div>
+</section>
+
+<section>
+  <div class="container filters" id="filters">
+    <button class="f-btn active" data-filter="all"><span>All Games</span></button>
+    <button class="f-btn" data-filter="slot"><span>Video Slots</span></button>
+    <button class="f-btn" data-filter="fishing"><span>Arcade Fishing</span></button>
+    <button class="f-btn" data-filter="table"><span>RNG Table</span></button>
+    <button class="f-btn" data-filter="bingo"><span>Bingo</span></button>
+  </div>
+  <div class="container">
+    <div class="g-grid" id="g-grid">
+      <!-- Injected via JS -->
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="f-grid">
+      <div>
+        <div class="f-logo"><span class="red-txt skew">FAST</span>ONE</div>
+        <div class="f-desc">Engineering the highest cash-flow casino software on the market through pure mathematical precision.</div>
+      </div>
+      <div>
+        <div class="f-title skew">Arsenal</div>
+        <a href="games.html" class="f-link">Video Slots</a>
+        <a href="games.html" class="f-link">Arcade Fishing</a>
+        <a href="games.html" class="f-link">Table & RNG</a>
+      </div>
+      <div>
+        <div class="f-title skew">Company</div>
+        <a href="company.html" class="f-link">Architecture</a>
+        <a href="contact.html" class="f-link">Partner Program</a>
+        <a href="#" class="f-link">API Docs</a>
+      </div>
+      <div>
+        <div class="f-title skew">Legal</div>
+        <a href="#" class="f-link">RNG Certification</a>
+        <a href="#" class="f-link">Responsible Gaming</a>
+        <a href="#" class="f-link">Privacy Policy</a>
+      </div>
+    </div>
+    <div class="f-bot">
+      <div>&copy; 2026 Fastone Network. All systems operational.</div>
+      <div>18+ | MGA/B2B/123/2026</div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('g-grid');
+  const filters = document.getElementById('filters');
+  
+  if(typeof GAMES === 'undefined' || typeof getGameImg === 'undefined') {
+    grid.innerHTML = '<div style="color:var(--red);font-weight:900;">SYSTEM ERROR: app.js missing.</div>';
+    return;
+  }
+
+  function renderGrid(filter) {
+    let html = '';
+    const items = filter === 'all' ? GAMES : GAMES.filter(g => g.category.toLowerCase() === filter);
+    
+    items.forEach(g => {
+      const src = getGameImg(g.name);
+      html += `
+        <div class="g-card">
+          <img src="${src}" alt="${g.name}">
+          <div class="g-card-info">
+            <div class="gc-cat">${g.category}</div>
+            <div class="gc-name">${g.name}</div>
+            <div class="gc-stats">
+              <div class="gc-st">RTP <strong>${g.rtp}</strong></div>
+              <div class="gc-st">Vol <strong>${g.volatility}</strong></div>
+              <div class="gc-st">Max <strong><span class="red-txt">${g.maxWin}</span></strong></div>
+            </div>
+            <button class="gc-play" onclick="alert('Demo: ${g.name.replace(/'/g,"\\'")}!')"><span>Play Demo</span></button>
+          </div>
+        </div>
+      `;
+    });
+    grid.innerHTML = html;
+  }
+
+  renderGrid('all');
+
+  filters.addEventListener('click', e => {
+    const btn = e.target.closest('.f-btn');
+    if(!btn) return;
+    filters.querySelectorAll('.f-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderGrid(btn.dataset.filter);
+  });
+});
+</script>
+</body>
+</html>
